@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_service_team_tree" model="ir.ui.view">
+        <field name="name">service.team.tree</field>
+        <field name="model">service.team</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="leader_id"/>
+                <field name="member_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_service_team_form" model="ir.ui.view">
+        <field name="name">service.team.form</field>
+        <field name="model">service.team</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="leader_id"/>
+                        <field name="member_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_service_team" model="ir.actions.act_window">
+        <field name="name">Service Teams</field>
+        <field name="res_model">service.team</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_service_team" name="Service Team" parent="sale.sale_menu_root" action="action_service_team"/>
+</odoo>

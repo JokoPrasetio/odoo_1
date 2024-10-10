@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    image: odoo:15.0   # Gambar Odoo versi 15
+    depends_on:
+      - db              # Service Odoo tergantung pada service db (PostgreSQL)
+    ports:
+      - "8069:8069"     # Map port 8069 di container ke port 8069 di host
+    volumes:
+      - odoo-web-data:/var/lib/odoo   # Volume untuk menyimpan data Odoo
+      - ./addons:/mnt/extra-addons    # Map folder 'addons' lokal ke container
+    environment:
+      - HOST=db                       # Database host di container 'db'
+      - USER=odoo                     # User PostgreSQL
+      - PASSWORD=odoo                 # Password PostgreSQL
+      - PGDATABASE=odoo           
+    restart: always                    # Restart kontainer otomatis jika terjadi error
+
+  db:
+    image: postgres:13                 # Gambar PostgreSQL versi 13
+    environment:
+      - POSTGRES_USER=postgres             # User PostgreSQL
+      - POSTGRES_PASSWORD=odoo         # Password PostgreSQL
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data  # Volume untuk menyimpan data PostgreSQL
+    restart: always                    # Restart kontainer otomatis jika terjadi error
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:
